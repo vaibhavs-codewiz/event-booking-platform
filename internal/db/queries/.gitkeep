@@ -1,0 +1,7 @@
+# Phase 2: place .sql query files here (one per feature) and run `sqlc generate`.
+# Example (internal/db/queries/users.sql):
+#
+#   -- name: GetUserByEmail :one
+#   SELECT id, email, password_hash, role, name, created_at, updated_at
+#   FROM users
+#   WHERE lower(email) = lower($1);

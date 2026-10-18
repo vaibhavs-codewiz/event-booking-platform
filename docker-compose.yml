@@ -1,0 +1,49 @@
+# Local development services only.
+#
+# Brings up PostgreSQL and Redis with persistent volumes and healthchecks.
+# Run:
+#     docker compose up -d
+# Verify:
+#     docker compose ps
+# Tear down (keeps data):
+#     docker compose down
+# Tear down and remove data:
+#     docker compose down -v
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: event_booking_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: event_booking
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d event_booking"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  redis:
+    image: redis:7-alpine
+    container_name: event_booking_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
+volumes:
+  postgres_data:
+  redis_data:
