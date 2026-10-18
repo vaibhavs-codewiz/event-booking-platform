@@ -58,7 +58,7 @@ func TestLoadRequiresRedisURL(t *testing.T) {
 }
 
 func TestLoadSucceedsWithRequiredVars(t *testing.T) {
-	t.Setenv("DATABASE_URL", "postgres://postgres:postgres@localhost:5432/test")
+	t.Setenv("DATABASE_URL", "postgres://postgres:postgres@localhost:5433/test")
 	t.Setenv("REDIS_URL", "redis://localhost:6379/0")
 	t.Setenv("JWT_SECRET", "")
 

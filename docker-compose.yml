@@ -19,7 +19,9 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: event_booking
     ports:
-      - "5432:5432"
+      # Host port 5433 (not 5432) to avoid colliding with a host-native
+      # PostgreSQL that commonly listens on 5432. The in-container port stays 5432.
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:

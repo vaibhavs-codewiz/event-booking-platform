@@ -37,7 +37,7 @@ func (s *Server) healthLive(c *gin.Context) {
 // by verifying both Postgres and Redis respond. Returns 503 if any dependency
 // is unreachable, with the per-dependency status included for diagnostics.
 func (s *Server) healthReady(c *gin.Context) {
-	ctx := c.Request().Context()
+	ctx := c.Request.Context()
 	deps := depsStatus{
 		Postgres: pingPostgres(ctx, s.pg),
 		Redis:    pingRedis(ctx, s.rdb),
